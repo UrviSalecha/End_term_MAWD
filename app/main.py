@@ -11,7 +11,7 @@ from database import engine,Base,get_db
 # from passlib.context import CryptContext
 # import json could not import module 
 
-Base.metadata.create_all(bind=engine)
+
 
 app=FastAPI()
 app.mount("/static",StaticFiles(directory="static"),name="static")
@@ -24,6 +24,7 @@ class Book(Base):
     author=Column(String,index=True)
     year=Column(Integer,index=True)
     
+Base.metadata.create_all(bind=engine)    
 
 @app.get("/books")
 def get_books(request:Request,db:Session=Depends(get_db)):
