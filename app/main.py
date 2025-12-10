@@ -35,9 +35,7 @@ def get_byid(id:int,request: Request,db:Session=Depends(get_db)):
     book=db.query(Book).filter(Book.id==id).first()
     if not book:
         raise HTTPException(status_code=404,detail="Book not found")
-    db.commit()
-    db.refresh(book)
-    return templates.TemplateResponse("book_detail.html",{"request":Request,"book":book})
+    return templates.TemplateResponse("book_detail.html",{"request":request,"book":book})
 
 @app.post("/books") #Create
 def create_book(title:str=Form(...),author:str=Form(...),year:int=Form(...),db:Session=Depends(get_db)):
@@ -59,11 +57,11 @@ def update_book(id:int,title:str=Form(...),author:str=Form(...),year:int=Form(..
     db.refresh(book)
     return RedirectResponse("/books",status_code=303)
 
-@app.post("/books/{id}") #delete
+@app.post("/books/{id}/delete") #delete
 def delete_book(id:int,db:Session=Depends(get_db)):
     book=db.query(Book).filter(Book.id==id).first()
     if not book:
         raise HTTPException(status_code=404,detail="Book not found")
     db.delete(book)
-    db.refresh()
+    db.commit()
     return RedirectResponse("/books",status_code=303)
