@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Books Management</h1>
+    <div class="add_form">
+        <h3>Books</h3>
+        <form action="/books" method="post">
+            <label for="title">Title</label><br>
+            <input type="text" name="title" id="title">
+
+            <label for="author">Author</label><br>
+            <input type="text" name="author" id="author">
+
+            <label for="year">Year</label><br>
+            <input type="number" name="year" id="year">
+
+            <button type="submit" class="button">Book Add</button>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <form action="/books/{{book.id}}" method="post">
+                    <td><input type="text" name="title" value="{{book.title}}"></td>
+                    <td><input type="text" name="author" value="{{book.author}}"></td>
+                    <td><input type="number" name="year" value="{{book.year}}"></td>
+                    <td><button type="submit" class="button">Update</button></td>
+                    <td formaction="/books/{{book.id}}/delete" formmethod="post" class="button">Delete</td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
