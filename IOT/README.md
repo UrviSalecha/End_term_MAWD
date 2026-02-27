@@ -7,5 +7,5 @@
 
 ## Execution Steps for *Question 3*
 1. Imported cv2 module used cascades for face detection integrated it with mqtt (publisher and subscriber both)
-2. 
+2. Then used the logic that I learnt from the internet 
 ### Attempted all the questions in Python
